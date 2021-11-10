@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
-import 'package:error_handling_extension/error_handling_extension.dart';
+import 'package:error_handling_extension/error_handling_extension.dart'
+    show Right, Left, Either, Some, None;
 
 Future<void> main() async {
   test('right generic is right', () {
@@ -8,6 +9,7 @@ Future<void> main() async {
     expect(maybe.isLeft, isFalse);
     expect(maybe.getOrElse(100), 1);
     expect(maybe.right, 1);
+    expect(maybe is Either<String, int>, isTrue);
   });
 
   test('left generic is left', () {
@@ -16,6 +18,7 @@ Future<void> main() async {
     expect(maybe.isLeft, isTrue);
     expect(maybe.getOrElse(100), 100);
     expect(maybe.left, "Left");
+    expect(maybe is Either<String, int>, isTrue);
   });
 
   test('map right', () {
@@ -38,10 +41,9 @@ Future<void> main() async {
 
   test('map right async', () async {
     final maybe = Right<String, int>(1);
-    Future<Option<String>> Function(int) map = (int value) async {
+    final mapped = await maybe.mapAsync<String>((int value) async {
       return Some('map right async');
-    };
-    final mapped = await maybe.mapAsync<String>(map);
+    });
     expect(mapped.getOrElse('map left async'), 'map right async');
     expect(mapped is Some<String>, isTrue);
     expect(mapped is None, isFalse);
@@ -49,10 +51,9 @@ Future<void> main() async {
 
   test('map left async', () async {
     final maybe = Left<String, int>('map left async');
-    Future<Option<String>> Function(int) map = (int value) async {
+    final mapped = await maybe.mapAsync<String>((int value) async {
       return Some('map right async');
-    };
-    final mapped = await maybe.mapAsync<String>(map);
+    });
     expect(mapped.getOrElse('map left async'), 'map left async');
     expect(mapped is Some<String>, isFalse);
     expect(mapped is None, isTrue);

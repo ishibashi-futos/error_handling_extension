@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
-import 'package:error_handling_extension/error_handling_extension.dart';
+import 'package:error_handling_extension/error_handling_extension.dart'
+    show Some, None, Option;
 
 Future<void> main() async {
   test('is Some', () {
