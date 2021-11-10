@@ -1,0 +1,22 @@
+name: workflows
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  google/dart:2.14.4
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: dart pub get
+    - name: Tests
+      run: dart test
