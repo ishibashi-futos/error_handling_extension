@@ -1,0 +1,9 @@
+name: error_handling_extension
+description: I want to use Either, Option, Try in the Dart world.
+publish_to: 'no'
+version: 1.0.0
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+
+dev_dependencies:
+  test: 1.19.3
