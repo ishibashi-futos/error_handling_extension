@@ -27,4 +27,6 @@ jobs:
     - name: Tests
       run: dart test --coverage=.coverage
     - name: Check Covergage
-      run: format_coverage -l -c -i .coverage --report-on=lib --packages=.packages | check_coverage 98
+      run: |
+        export PATH="$PATH":"$HOME/.pub-cache/bin"
+        format_coverage -l -c -i .coverage --report-on=lib --packages=.packages | check_coverage 98
