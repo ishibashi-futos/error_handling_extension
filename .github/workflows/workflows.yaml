@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  tests:
 
     runs-on: ubuntu-latest
     strategy:
@@ -20,6 +20,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: dart pub get
+      run: |
+        dart pub get
+        pub global activate coverage
+        dart pub global activate check_coverage
     - name: Tests
-      run: dart test
+      run: dart test --coverage=.coverage
+    - name: Check Covergage
+      run: format_coverage -l -c -i .coverage --report-on=lib --packages=.packages | check_coverage 98
