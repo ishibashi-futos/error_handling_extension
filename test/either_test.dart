@@ -111,4 +111,21 @@ Future<void> main() async {
       expect(p0, "left async");
     });
   });
+
+  test('If the result is true when it exists', () {
+    final maybe = Right<String, double>(3.14);
+    expect(maybe.exists((p0) => p0 == 3.14), isTrue);
+  });
+
+  test('If false when the result does not exist', () {
+    final maybe = Right<String, double>(3.14);
+    expect(maybe.exists((p0) => p0 == 3.13), isFalse);
+  });
+
+  test('If Left, it will be false in any case.', () {
+    final maybe = Left<String, double>("string");
+    expect(maybe.exists((p0) {
+      fail("If called, an error will occur.");
+    }), isFalse);
+  });
 }

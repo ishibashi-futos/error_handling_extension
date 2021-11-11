@@ -29,6 +29,8 @@ abstract class Either<L, R> {
       isLeft ? await fL(_left!) : await fR(_right!);
 
   Either<R, L> swap() => throw ('The method is not overridden');
+
+  bool exists(bool Function(R) fR) => isLeft ? false : fR(_right!);
 }
 
 class Left<L, R> extends Either<L, R> {

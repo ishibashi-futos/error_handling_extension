@@ -27,6 +27,8 @@ abstract class Option<V> {
   Future<void> matchAsync<T>(
           Future<void> Function(V) some, Future<void> Function() none) async =>
       isEmpty ? await none() : await some(_value!);
+
+  bool exists(bool Function(V) some) => isEmpty ? false : some(_value!);
 }
 
 class Some<V> extends Option<V> {

@@ -107,4 +107,21 @@ Future<void> main() async {
     });
     expect(passed, isTrue);
   });
+
+  test('If the result is true when it exists', () {
+    final maybe = Some<double>(3.14);
+    expect(maybe.exists((p0) => p0 == 3.14), isTrue);
+  });
+
+  test('If false when the result does not exist', () {
+    final maybe = Some<double>(3.14);
+    expect(maybe.exists((p0) => p0 == 3.13), isFalse);
+  });
+
+  test('If Left, it will be false in any case.', () {
+    final maybe = None<double>();
+    expect(maybe.exists((p0) {
+      fail("If called, an error will occur.");
+    }), isFalse);
+  });
 }
