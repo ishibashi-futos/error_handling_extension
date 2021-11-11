@@ -22,11 +22,22 @@ jobs:
     - name: Install dependencies
       run: |
         dart pub get
-        pub global activate coverage
+        dart pub global activate coverage
         dart pub global activate check_coverage
+        apt update -y
+        apt install lcov zip -y
     - name: Tests
       run: dart test --coverage=.coverage
     - name: Check Covergage
       run: |
         export PATH="$PATH":"$HOME/.pub-cache/bin"
         format_coverage -l -c -i .coverage --report-on=lib --packages=.packages | check_coverage 98 | true
+        dart pub global run coverage:format_coverage --packages=.packages --report-on=lib --lcov -o .coverage/lcov.info -i .coverage
+        genhtml -o ./report .coverage/lcov.info
+        zip -r dist.zip ./report/*
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: report.zip
+        retention-days: 3
