@@ -28,7 +28,7 @@ abstract class Either<L, R> {
           Future<void> Function(R) fR, Future<void> Function(L) fL) async =>
       isLeft ? await fL(_left!) : await fR(_right!);
 
-  Either<R, L> swap() => throw ('The method is not overridden');
+  Either<R, L> swap();
 
   bool exists(bool Function(R) fR) => isLeft ? false : fR(_right!);
 }
