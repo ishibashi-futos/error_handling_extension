@@ -34,10 +34,10 @@ jobs:
         format_coverage -l -c -i .coverage --report-on=lib --packages=.packages | check_coverage 98 | true
         dart pub global run coverage:format_coverage --packages=.packages --report-on=lib --lcov -o .coverage/lcov.info -i .coverage
         genhtml -o ./report .coverage/lcov.info
-        zip -r dist.zip ./report/*
+        zip -r dist_${{ matrix.dart }}.zip ./report/*
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
         name: code-coverage-report
-        path: dist.zip
+        path: dist_${{ matrix.dart }}.zip
         retention-days: 3
