@@ -32,7 +32,7 @@ Future<void> main() async {
     expect(maybe.orNull(), 10);
   });
 
-  test('map right', () {
+  test('map some', () {
     final maybe = Some<int>(1);
     final mapped = maybe.map((value) => value + 1);
     expect(mapped.getOrElse(100), 2);
@@ -40,7 +40,7 @@ Future<void> main() async {
     expect(mapped is None, isFalse);
   });
 
-  test('map left', () {
+  test('map none', () {
     final maybe = None<int>();
     final mapped = maybe.map((value) => value + 1);
     expect(mapped is Some<int>, isFalse);
@@ -48,7 +48,27 @@ Future<void> main() async {
     expect(mapped.getOrElse(100), 100);
   });
 
-  test('is right matching', () {
+  test('map some async', () async {
+    final maybe = Some<int>(1);
+    final mapped = await maybe.mapAsync<String>((p0) async => '${p0}000');
+    expect(mapped.getOrElse('2000'), '1000');
+    expect(mapped is Some<String>, isTrue);
+    expect(mapped is Option<String>, isTrue);
+    expect(mapped is Some<int>, isFalse);
+    expect(mapped is None<int>, isFalse);
+  });
+
+  test('map none async', () async {
+    final maybe = None<int>();
+    final mapped = await maybe.mapAsync<String>((p0) async => '1000');
+    expect(mapped.getOrElse('2000'), '2000');
+    expect(mapped is Some<String>, isFalse);
+    expect(mapped is Option<String>, isTrue);
+    expect(mapped is Some<int>, isFalse);
+    expect(mapped is None<String>, isTrue);
+  });
+
+  test('is some matching', () {
     final maybe = Some<int>(100);
     maybe.match((p0) {
       expect(p0, 100);
@@ -57,7 +77,7 @@ Future<void> main() async {
     });
   });
 
-  test('is left matching', () {
+  test('is none matching', () {
     final maybe = None<int>();
     maybe.match((p0) {
       fail('should not be Some');
@@ -65,5 +85,26 @@ Future<void> main() async {
       // pass
       expect(true, true);
     });
+  });
+
+  test('is some matching async', () async {
+    final maybe = Some<int>(100);
+    await maybe.matchAsync((p0) async {
+      expect(p0, 100);
+    }, () async {
+      fail('should not be None');
+    });
+  });
+
+  test('is none matching async', () async {
+    final maybe = None<int>();
+    var passed = false;
+    await maybe.match((p0) {
+      fail('should not be Some');
+    }, () {
+      // pass
+      passed = true;
+    });
+    expect(passed, isTrue);
   });
 }
