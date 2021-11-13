@@ -20,11 +20,10 @@ abstract class Option<V> {
       isEmpty ? Future.value(None()) : Future.value(Some<T>(await f(_value!)));
 
   // pattern match.
-  match<T>(Function(V) some, Function() none) =>
-      isEmpty ? none() : some(_value!);
+  match(Function(V) some, Function() none) => isEmpty ? none() : some(_value!);
 
   // pattern match async.
-  Future<void> matchAsync<T>(
+  Future<void> matchAsync(
           Future<void> Function(V) some, Future<void> Function() none) async =>
       isEmpty ? await none() : await some(_value!);
 
