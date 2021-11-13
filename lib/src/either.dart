@@ -1,4 +1,4 @@
-import 'package:error_handling_extension/src/option.dart';
+import 'package:functional_error_handling_dart/src/option.dart';
 
 abstract class Either<L, R> {
   L? _left;

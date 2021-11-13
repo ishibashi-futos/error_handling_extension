@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:error_handling_extension/error_handling_extension.dart'
+import 'package:functional_error_handling_dart/functional_error_handling_dart.dart'
     show Right, Left, Either, Some, None;
 
 Future<void> main() async {

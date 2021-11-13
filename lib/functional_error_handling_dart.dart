@@ -1,4 +1,4 @@
-library error_handling_extension;
+library functional_error_handling_dart;
 
 export './src/either.dart';
 export './src/option.dart';

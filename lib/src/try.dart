@@ -1,4 +1,5 @@
-import 'package:error_handling_extension/error_handling_extension.dart';
+import 'package:functional_error_handling_dart/src/option.dart';
+import 'package:functional_error_handling_dart/src/either.dart';
 
 abstract class Try<S, E extends Exception> {
   late final E _failed;
