@@ -12,7 +12,7 @@ dependencies:
   functional_error_handling_dart:
     git:
       url: https://github.com/ishibashi-futos/functional_error_handling_dart.git
-      ref: master # latest package version.
+      ref: v0.1.0 # latest package version.
 
 dev_dependencies:
   lints: ^1.0.0
