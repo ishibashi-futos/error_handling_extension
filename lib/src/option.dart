@@ -28,6 +28,10 @@ abstract class Option<V> {
       isEmpty ? await none() : await some(_value!);
 
   bool exists(bool Function(V) some) => isEmpty ? false : some(_value!);
+
+  // applies if Empty / if Defeined
+  T fold<T>(T Function(V) ifDefeined, T Function() ifEmpty) =>
+      isEmpty ? ifEmpty() : ifDefeined(_value!);
 }
 
 class Some<V> extends Option<V> {

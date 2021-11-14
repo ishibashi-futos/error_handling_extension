@@ -43,6 +43,10 @@ abstract class Try<S, E extends Exception> {
   // async recover if it fails.
   Future<Try<S, E>> recoverAsync(Future<Try<S, E>> Function(E) pf) =>
       isSuccess ? Future.value(this) : pf(_failed);
+
+  // applies if Failure / if Success
+  T fold<T>(T Function(S) ifSuccess, T Function(E) ifFailure) =>
+      isFailure ? ifFailure(_failed) : ifSuccess(_success!);
 }
 
 class Success<S> extends Try<S, Exception> {

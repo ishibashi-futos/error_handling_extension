@@ -31,6 +31,10 @@ abstract class Either<L, R> {
   Either<R, L> swap();
 
   bool exists(bool Function(R) fR) => isLeft ? false : fR(_right!);
+
+  // applies fL / fR
+  T fold<T>(T Function(R) fR, T Function(L) fL) =>
+      isLeft ? fL(_left!) : fR(_right!);
 }
 
 class Left<L, R> extends Either<L, R> {

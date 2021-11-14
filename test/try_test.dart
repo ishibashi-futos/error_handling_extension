@@ -176,4 +176,30 @@ Future<void> main() async {
     expect(ok is Success<String>, isTrue);
     expect(ok is Failure<String>, isFalse);
   });
+
+  group('fold', () {
+    test('fold if Success', () {
+      final maybe = Success<String>('100');
+      expect(
+          maybe.fold<int>((success) {
+            expect(success, '100');
+            return int.parse(success);
+          }, (e) {
+            fail('If called, an error will occur.');
+          }),
+          100);
+    });
+
+    test('fold if Failure', () {
+      final maybe = Failure<String>(new FormatException());
+      expect(
+          maybe.fold<int>((success) {
+            fail('If called, an error will occur.');
+          }, (e) {
+            expect(e is FormatException, isTrue);
+            return 100;
+          }),
+          100);
+    });
+  });
 }

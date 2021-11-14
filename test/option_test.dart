@@ -124,4 +124,26 @@ Future<void> main() async {
       fail("If called, an error will occur.");
     }), isFalse);
   });
+
+  group('fold', () {
+    test('fold if Some', () {
+      final maybe = Some<String>('100');
+      expect(
+          maybe.fold((p0) => int.parse(p0), () {
+            fail('If called, an error will occur.');
+          }),
+          100);
+    });
+
+    test('fold if None', () {
+      final maybe = None<String>();
+      expect(
+          maybe.fold((p0) {
+            fail('If called, an error will occur.');
+          }, () {
+            return 100;
+          }),
+          100);
+    });
+  });
 }
